@@ -1,0 +1,56 @@
+.crud-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.crud-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333333;
+}
+
+.crud-form {
+    width: 100%;
+    max-width: 400px;
+}
+
+.crud-form div {
+    margin-bottom: 10px;
+}
+
+.crud-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.crud-form input[type="text"],
+.crud-form input[type="date"],
+.crud-form input[type="number"] {
+    width: calc(100% - 12px); 
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.crud-form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.crud-form button:hover {
+    background-color: #0056b3;
+}
