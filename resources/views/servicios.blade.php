@@ -20,7 +20,7 @@
             @if ($servicios)
                 @foreach ($servicios as $servicio)
                     <li class="item-servicio">
-                        <a href="{{ route('servicios.show', $servicio) }}" class="enlace-servicio">{{ $servicio->titulo }}</a>
+                        <a href="{{ route('servicios.show', $servicio->id) }}" class="enlace-servicio">{{ $servicio->titulo }}</a>
                     </li>
                 @endforeach
             @else

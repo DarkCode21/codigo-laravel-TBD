@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Servicio;
+use App\Http\Requests\CreateServicioRequest;
 
 class ServiciosController extends Controller
 {
@@ -26,8 +27,14 @@ class ServiciosController extends Controller
     }
 
 
+    // public function create(){
+    //     return view('create');
+    // }
+
     public function create(){
-        return view('create');
+        return view('create',[
+            'servicio' => new Servicio
+        ]);
     }
 
     public function store(){
@@ -51,6 +58,54 @@ class ServiciosController extends Controller
         Servicio::create($camposv);
         return redirect()->route('servicios');
     }
+    
+    // public function store(CreateServicioRequest $request){
+    //     Servicio::create($request->validate());
+
+    //     return redirect()->route('servicios');
+    // }
+
+    public function edit(Servicio $id){
+        return view('edit',[
+            'servicio' => $id
+        ]);
+    }
+
+    // public function update(Servicio $id){
+    //     $id->update([
+    //         'titulo' => request('titulo'),
+    //         'descripcion' => request('descripcion')
+    //     ]);
+    //     return redirect()->route('servicios.show',$id);
+    // }
+
+    public function update(Servicio $id, Request $request){
+        $request->validate([
+            'titulo' => 'required',
+            'descripcion' => 'required',
+        ]);
+        $id->update([
+            'titulo' => $request->titulo,
+            'descripcion' => $request->descripcion,
+        ]);
+        return redirect()->route('servicios.show', $id);
+    }
+    
+    
+    //Validando Actualización
+
+    // public function update(Servicio $servicio, CreateServicioRequest $request){
+    //     $servicio->update($request->validate());
+
+    //     return redirect()->route('servicios.show',$servicio);
+    // }
 
 
+    public function destroy(Servicio $servicio){
+        $servicio->delete();
+        return redirect()->route('servicios');
+    }
+    
+    
+    
 }
