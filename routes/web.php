@@ -6,7 +6,7 @@ use App\Http\Controllers\Servicios3Controller;
 use App\Http\Controllers\ServiciosController;
 
 use App\Http\Controllers\PersonaController;
-
+use App\Http\Controllers\ContactoController;
 
 $servicios = [
     // ['titulo' => 'Servicio 01'],
@@ -30,11 +30,6 @@ Route::get('servicios/{id}/editar',[ServiciosController::class,'edit'])->name('s
 Route::patch('servicios/{id}',[ServiciosController::class,'update'])->name('servicios.update');
 Route::delete('servicios/{servicio}',[ServiciosController::class,'destroy'])->name('servicios.destroy');
 
-
-// Route::resource('servicios', Servicios2Controller::class)->only(['index', 'show']);
-// Route::resource('servicios', Servicios2Controller::class)->except(['index', 'show']);
-// Route::resource('servicios', Servicios3Controller::class);
-
 Route::get('personas', [PersonaController::class, 'index'])->name('personas.index');
 Route::get('personas/crear', [PersonaController::class, 'create'])->name('personas.create');
 Route::post('personas', [PersonaController::class, 'store'])->name('personas.store');
@@ -46,4 +41,4 @@ Route::delete('personas/{nPerCodigo}', [PersonaController::class, 'destroy'])->n
 
 Route::view('contacto','contacto')->name('contacto');
 
-
+Route::post('contacto', [ContactoController::class, 'store'])->name('contacto.store');
