@@ -22,14 +22,7 @@ class ServiciosController extends Controller
         return view('show',[
             'servicio' => Servicio::find($id)
         ]);
-
-        // return Servicio::find($id);
     }
-
-
-    // public function create(){
-    //     return view('create');
-    // }
 
     public function create(){
         return view('create',[
@@ -56,39 +49,31 @@ class ServiciosController extends Controller
 
         //Almacenamos en la BD usando el modelo Servicio
         Servicio::create($camposv);
-        return redirect()->route('servicios');
+        
+        // return redirect()->route('servicios.index');
+        return redirect()->route('servicios.index')->with('estado','El servicio fue creado correctamente');
+
     }
     
-    // public function store(CreateServicioRequest $request){
-    //     Servicio::create($request->validate());
+    public function edit(Servicio $servicio){
+        return view('edit', ['servicio' => $servicio]);
 
-    //     return redirect()->route('servicios');
-    // }
-
-    public function edit(Servicio $id){
-        return view('edit',[
-            'servicio' => $id
-        ]);
     }
 
-    // public function update(Servicio $id){
-    //     $id->update([
-    //         'titulo' => request('titulo'),
-    //         'descripcion' => request('descripcion')
-    //     ]);
-    //     return redirect()->route('servicios.show',$id);
-    // }
 
-    public function update(Servicio $id, Request $request){
+    public function update(Request $request, Servicio $servicio)
+    {
         $request->validate([
             'titulo' => 'required',
             'descripcion' => 'required',
         ]);
-        $id->update([
+
+        $servicio->update([
             'titulo' => $request->titulo,
             'descripcion' => $request->descripcion,
         ]);
-        return redirect()->route('servicios.show', $id);
+
+        return redirect()->route('servicios.show', $servicio)->with('estado','El servicio fue actualizado correctamente');
     }
     
     
@@ -103,9 +88,7 @@ class ServiciosController extends Controller
 
     public function destroy(Servicio $servicio){
         $servicio->delete();
-        return redirect()->route('servicios');
+        // return redirect()->route('servicios');
+        return redirect()->route('servicios.index')->with('estado','El servicio fue eliminado correctamente');
     }
-    
-    
-    
 }

@@ -19,36 +19,16 @@
     </head>
     <body>
         
-        {{-- <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="nosotros">Nosotros</a></li>
-                <li><a href="servicios">Servicios</a></li>
-                <li><a href="contacto">Contacto</a></li>
-            </ul>
-        </nav> --}}
-
-
         <nav>
-            {{-- {{dump(request()->routeIs('home'))}} --}}
             <table class="table">
-                {{-- <thead class="table table-bordered">
-                    <tr>
-                        <th scope="col" class="{{setActivo('home')}}"><a href="{{route('home')}}">Home</a></th>
-                        <th scope="col" class="{{setActivo('nosotros')}}"><a href="nosotros">Nosotros</a></th>
-                        <th scope="col" class="{{setActivo('servicios')}}"><a href="servicios">Servicios</a></th>
-                        <th scope="col" class="{{setActivo('contacto')}}"><a href="contacto">Contacto</a></th>
-                    </tr>
-                </thead> --}}
+
                 @include('partials.nav')
                 
             </table>
             
         </nav>
+        @include('partials.sesion-estado')
         @yield('content')
-
-
-
 
         <footer class="text-center p-3" style="background-color: rgba(94, 90, 90, 0.2);">
             © 2024 Derechos Reservados:

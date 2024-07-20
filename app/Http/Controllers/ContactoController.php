@@ -25,11 +25,18 @@ class ContactoController extends Controller
             'asunto.max' => 'El asunto no puede tener más de 255 caracteres.',
             'mensaje.required' => 'El mensaje es obligatorio.',
         ]);
+
+        // return new MensajeRecibido(
+        //     $mensaje['nombre'],
+        //     $mensaje['email'],
+        //     $mensaje['asunto'],
+        //     $mensaje['mensaje']
+        // );
         
         Mail::to('deyvi132002@gmail.com')->send(new MensajeRecibido($mensaje));
 
-        return 'Datos validados y correo enviado';
+        // return 'Datos validados y correo enviado';
+        // return redirect()->route('contacto')->with('status', 'Datos validados y correo enviado');
+            return back()->with('estado','Datos validados y correo enviado');
     }
-
-
 }

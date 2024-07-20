@@ -54,7 +54,7 @@
             
             @method('PATCH')
         
-                @include('partials.form',['btnText'=>'Actualizarr'])
+                @include('partials.form',['btnText'=>'Actualizar'])
             </form>
         </table>
         
