@@ -1,37 +1,31 @@
 @extends('layout')
 @section('title','Servicio | ' . $servicio->titulo)
 @push('styles')
-    <link rel="stylesheet" href="{{asset('css/servicios.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/servicios.css') }}">
 @endpush
 
 @section('content')
-
-    <table class="tabla-servicio">
-        <tr>
-            <td colspan="4" class="titulo-servicio">{{$servicio->titulo}}</td>
-        </tr>
-        <tr>
-            <td colspan="4" class="descripcion-servicio">{{$servicio->descripcion}}</td>
-        </tr>
-        <tr>
-            <td colspan="4" class="fecha-servicio">{{$servicio->created_at->diffForHumans()}}</td>
-        </tr>
-        <tr><a href="{{route('servicios.edit',$servicio)}}" class="btn-personalizado"class="btn-personalizado">Editar</a></tr>
-
-        <tr colspan="4">
-            <form action="{{route('servicios.destroy',$servicio)}}" method="POST">
-                @csrf @method('DELETE')
-                <button>Eliminar</button>
-                
-            </form>
-        </tr>
-
-
-
-    </table>
+    @auth
+        <div class="card-servicio">
+            @if ($servicio->image)
+                <img src="{{ asset('storage/' . $servicio->image) }}" alt="{{$servicio->titulo}}" class="imagen-card">
+            @endif
+            <div class="contenido-card">
+                <h1 class="titulo-card">{{ $servicio->titulo }}</h1>
+                <p class="descripcion-card">{{ $servicio->descripcion }}</p>
+                <p class="fecha-card">Publicado {{ $servicio->created_at->diffForHumans() }}</p>
+                <div class="acciones-card">
+                    <a href="{{ route('servicios.edit', $servicio) }}" class="btn-personalizado">Editar</a>
+                    <form action="{{ route('servicios.destroy', $servicio) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn-personalizado btn-eliminar">Eliminar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endauth
     <div class="pie-tarjeta text-center">
-        {{-- <a href="{{ route('servicios') }}" class="btn-personalizado">Volver a la Lista</a> --}}
         <a href="{{ route('servicios.index') }}" class="btn-personalizado">Volver a la Lista</a>
-
     </div>
 @endsection

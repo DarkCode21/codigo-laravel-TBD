@@ -39,4 +39,5 @@ class ContactoController extends Controller
         // return redirect()->route('contacto')->with('status', 'Datos validados y correo enviado');
             return back()->with('estado','Datos validados y correo enviado');
     }
+
 }

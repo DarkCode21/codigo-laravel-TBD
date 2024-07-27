@@ -48,7 +48,7 @@ class PersonaController extends Controller
         Persona::create($camposValidados);
 
         return redirect()->route('personas.index')
-                        ->with('success', 'Persona creada exitosamente.');
+                        ->with('estado', 'Persona creada exitosamente.');
     }
 
     public function edit($nPerCodigo)
@@ -74,7 +74,7 @@ class PersonaController extends Controller
         $persona->update($camposValidados);
 
         return redirect()->route('personas.index')
-                        ->with('success', 'Persona actualizada exitosamente.');
+                        ->with('estado', 'Persona actualizada exitosamente.');
     }
 
     public function destroy($nPerCodigo)
@@ -83,6 +83,6 @@ class PersonaController extends Controller
         $persona->delete();
 
         return redirect()->route('personas.index')
-                        ->with('success', 'Persona eliminada exitosamente.');
+                        ->with('estado', 'Persona eliminada exitosamente.');
     }
 }

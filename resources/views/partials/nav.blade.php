@@ -7,5 +7,22 @@
 
         <th scope="col" class="{{setActivo('personas')}}"><a href="{{route('personas.index')}}">Personas</a></th>
         <th scope="col" class="{{setActivo('contacto')}}"><a href="{{route('contacto')}}">Contacto</a></th>
+
+        @guest
+            <th scope="col"><a href="{{route('login')}}">Login</a></th>
+        
+            @else
+            <th scope="col">
+                <a  href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                    Cerrar Sesión
+                </a>
+            </th>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+        @endguest
+
     </tr>
 </thead>

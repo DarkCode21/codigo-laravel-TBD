@@ -179,3 +179,130 @@
 .form-button:hover {
     background-color: #0056b3;
 }
+
+/**/
+.lista-servicios {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.item-servicio {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    border: 1px solid #ddd; 
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9; 
+}
+
+.texto-servicio {
+    flex: 1;
+}
+
+.enlace-servicio {
+    text-decoration: none;
+    color: #333; 
+    font-size: 16px;
+}
+
+.imagen-servicio {
+    width: 50px;
+    height: auto; 
+    max-height: 50px; 
+}
+
+
+/**/
+/* Estilos de la tarjeta */
+.card-servicio {
+    max-width: 600px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.imagen-card {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.contenido-card {
+    padding: 20px;
+}
+
+.titulo-card {
+    font-size: 24px;
+    margin: 0;
+    color: #333;
+}
+
+.descripcion-card {
+    font-size: 16px;
+    margin: 10px 0;
+    color: #666;
+}
+
+.fecha-card {
+    font-size: 14px;
+    color: #999;
+}
+
+.acciones-card {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-personalizado {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-personalizado:hover {
+    background-color: #0056b3;
+}
+
+.btn-eliminar {
+    background-color: #dc3545;
+}
+
+.btn-eliminar:hover {
+    background-color: #c82333;
+}
+
+.pie-tarjeta {
+    margin: 20px auto;
+    text-align: center;
+}
+
+.pie-tarjeta .btn-personalizado {
+    background-color: #28a745;
+    text-decoration: none;
+}
+
+.pie-tarjeta .btn-personalizado:hover {
+    background-color: #218838;
+}
+/**/
+.imagen-previa {
+    max-width: 200px;
+    height: auto; 
+    display: block;
+    margin-bottom: 10px; 
+}
+/**/
