@@ -33,7 +33,7 @@ class ContactoController extends Controller
         //     $mensaje['mensaje']
         // );
         
-        Mail::to('deyvi132002@gmail.com')->send(new MensajeRecibido($mensaje));
+        Mail::to('yefers@gmail.com')->send(new MensajeRecibido($mensaje));
 
         // return 'Datos validados y correo enviado';
         // return redirect()->route('contacto')->with('status', 'Datos validados y correo enviado');

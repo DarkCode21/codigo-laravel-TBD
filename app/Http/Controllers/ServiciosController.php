@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Servicio;
 use App\Http\Requests\CreateServicioRequest;
 
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use App\Http\Controllers\Controller;
+use Intervention\Image\Laravel\Facades\Image;
+use App\Events\ServicioSaved;
+
 class ServiciosController extends Controller
 {
     public function __construct()
@@ -36,18 +42,6 @@ class ServiciosController extends Controller
         ]);
     }
 
-    // public function store(){
-    
-    //     $camposv = request()->validate([
-    //         'titulo' => 'required',
-    //         'descripcion' => 'required'
-    //     ]);
-
-    //     Servicio::create($camposv);
-        
-    //     return redirect()->route('servicios.index')->with('estado','El servicio fue creado correctamente');
-
-    // }
     public function store(CreateServicioRequest $request){
         $servicio = new Servicio($request->validated());
         $servicio->image = $request->file('image')->store('images');
@@ -61,61 +55,54 @@ class ServiciosController extends Controller
 
     }
 
-
-    // public function update(Request $request, Servicio $servicio)
-    // {
-    //     $request->validate([
-    //         'titulo' => 'required',
-    //         'descripcion' => 'required',
-    //     ]);
-
-    //     $servicio->update([
-    //         'titulo' => $request->titulo,
-    //         'descripcion' => $request->descripcion,
-    //     ]);
-
-    //     return redirect()->route('servicios.show', $servicio)->with('estado','El servicio fue actualizado correctamente');
-    // }
-    
-    
     //Validando Actualización
     // public function update(Servicio $servicio, CreateServicioRequest $request){
     //     $servicio->update($request->validate());
 
     //     return redirect()->route('servicios.show',$servicio);
     // }
-
+    
     public function update(Request $request, Servicio $servicio)
     {
         $request->validate([
             'titulo' => 'required',
             'descripcion' => 'required',
-            'image' => 'nullable','mimes:jpeg,png,jpg',
+            'image' => 'nullable|mimes:jpeg,png,jpg',
         ]);
 
         $data = [
             'titulo' => $request->titulo,
             'descripcion' => $request->descripcion,
         ];
-    
-        // if ($request->hasFile('image')) {
-        //     $data['image'] = $request->file('image')->store('images');
-        // }
 
-        // Verificar si se ha enviado un archivo de imagen
         if ($request->hasFile('image')) {
-            // Eliminar la imagen anterior si existe
             if ($servicio->image) {
                 Storage::delete($servicio->image);
             }
 
-            // Subir la nueva imagen y obtener la ruta
-            $data['image'] = $request->file('image')->store('images');
-        }
-    
-        $servicio->update($data);
+            $manager = new ImageManager(new Driver());
 
-        return redirect()->route('servicios.show', $servicio)->with('estado','El servicio fue actualizado correctamente');
+            $image = $manager->read($request->file('image')->getPathname());
+
+            // Redimensionar 600px
+            $image->cover(600, 600);
+
+            //nombre único y definir la ruta de almacenamiento
+            $imagePath = 'images/' . $request->file('image')->hashName();
+
+            // Guardar la imagen redimensionada en formato PNG
+            Storage::put($imagePath, (string) $image->toPng());
+
+            // Actualizar la ruta de la imagen en los datos
+            $data['image'] = $imagePath;
+        }
+
+        // Disparar el evento
+        
+
+        $servicio->update($data);
+         ServicioSaved::dispatch($servicio);
+        return redirect()->route('servicios.show', $servicio)->with('estado', 'El servicio fue actualizado correctamente');
     }
 
     public function destroy(Servicio $servicio){
