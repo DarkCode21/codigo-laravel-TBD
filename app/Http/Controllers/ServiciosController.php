@@ -13,6 +13,7 @@ use Intervention\Image\Drivers\Gd\Driver;
 use App\Http\Controllers\Controller;
 use Intervention\Image\Laravel\Facades\Image;
 use App\Events\ServicioSaved;
+use App\Models\Category;
 
 class ServiciosController extends Controller
 {
@@ -24,9 +25,14 @@ class ServiciosController extends Controller
     public function index(){
         // $servicios = DB::table('servicios')->get();
         // $servicios = Servicio::orderby('titulo','asc')->get();
-        $servicios = Servicio::latest()->paginate(2);
+        
+        // $servicios = Servicio::latest()->paginate(2);
+        // return view('servicios',compact('servicios'));
 
-        return view('servicios',compact('servicios'));
+        return view('servicios',[
+            'servicios' => Servicio::with('category')->latest()->paginate(4)
+        ]);
+
     }
 
     public function show($id){
@@ -37,10 +43,12 @@ class ServiciosController extends Controller
     }
 
     public function create(){
-        return view('create',[
-            'servicio' => new Servicio
+        return view('create', [
+            'servicio' => new Servicio,
+            'categories' => Category::pluck('name', 'id')
         ]);
     }
+    
 
     public function store(CreateServicioRequest $request){
         $servicio = new Servicio($request->validated());
@@ -51,7 +59,10 @@ class ServiciosController extends Controller
 
     }
     public function edit(Servicio $servicio){
-        return view('edit', ['servicio' => $servicio]);
+        return view('edit', 
+        [   'servicio' => $servicio,
+            'categories' => Category::pluck('name','id')
+        ]);
 
     }
 
@@ -68,12 +79,18 @@ class ServiciosController extends Controller
             'titulo' => 'required',
             'descripcion' => 'required',
             'image' => 'nullable|mimes:jpeg,png,jpg',
+            'category_id' => 'nullable|exists:categories,id', 
+
         ]);
 
         $data = [
             'titulo' => $request->titulo,
             'descripcion' => $request->descripcion,
+            'category_id' => $request->category_id,
+
         ];
+        //dd($data); 
+
 
         if ($request->hasFile('image')) {
             if ($servicio->image) {

@@ -23,6 +23,9 @@ class CreateServicioRequest extends FormRequest
     {
         return [
                 'titulo' => 'required',
+                'category_id' => [
+                    'required','exists:categories,id'
+                ],
                 'descripcion' => 'required',
                 // 'image' => ['required','mimes:png,jpg,jpeg',
                 //     'dimensions:width=600,height:400',
@@ -42,6 +45,7 @@ class CreateServicioRequest extends FormRequest
     {
         return [
             'titulo.required' => 'Se necesita titulo para el servicio',
+            'category_id.required' => 'Seleccione una categoria para el servicio',
             'descripcion.required' => 'Ingresa una descripcion,es necesaria',
             'image.required' => 'Debes seleccionar una imagen'
         ];

@@ -40,4 +40,5 @@ class ContactoController extends Controller
             return back()->with('estado','Datos validados y correo enviado');
     }
 
+
 }

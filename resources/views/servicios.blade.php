@@ -14,7 +14,16 @@
     @endauth
 
     <div class="container-servicios">
-        <h2 class="titulo-servicio">Lista Servicios</h2>
+        {{-- <h2 class="titulo-servicio">Lista Servicios</h2> --}}
+
+        @isset($category)   
+            <div>
+                <h1>{{$category->name}}</h1>
+                <a href="{{route('servicios.index')}}">Regresar a servicios</a>
+            </div>
+        @else
+            <h2 class="titulo-servicio">Lista Servicios</h2> 
+        @endisset
 
         <ul class="lista-servicios">
             @if ($servicios)
@@ -23,6 +32,9 @@
                         <span class="texto-servicio">
                             <a href="{{ route('servicios.show', $servicio->id) }}" class="enlace-servicio">{{ $servicio->titulo }}</a>
                         </span>
+                        @if ($servicio->category_id)
+                            <a href="{{route('categories.show',$servicio->category)}}" class="enlace-servicio">{{$servicio->category->name}}</a>
+                        @endif
                         @if ($servicio->image)
                             <img src="{{ asset('storage/' . $servicio->image) }}" alt="{{$servicio->titulo}}" class="imagen-servicio">
                         @endif
